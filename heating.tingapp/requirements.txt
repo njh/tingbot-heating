@@ -1,0 +1,2 @@
+paho-mqtt
+tingbot-python>=1.0.2
