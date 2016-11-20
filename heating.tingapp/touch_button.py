@@ -32,21 +32,31 @@ class touch_button(object):
             self.callback()
 
     # FIXME: do this better?
-    def _darken(self, t):
+    def _darken(self, t, amount=0.8):
         lst = list(t)
-        lst[0] *= 0.8
-        lst[1] *= 0.8
-        lst[2] *= 0.8
+        lst[0] *= amount
+        lst[1] *= amount
+        lst[2] *= amount
         return tuple(lst)
-    
+
+    def _luminance(self, color):
+        return (float(color[0])/255.0)*0.2126 + \
+               (float(color[1])/255.0)*0.7152 + \
+               (float(color[2])/255.0)*0.0722
+
     def render(self):
         if self.state == 'up':
             back_color = self.color
         elif self.state == 'down':
             back_color = self._darken(self.color)
 
+        if self._luminance(back_color) < 0.5:
+            font_color = 'white'
+        else:
+            font_color = 'black'
+
         tingbot.screen.rectangle(self.xy, self.size, color=back_color)
-        tingbot.screen.text(self.label, xy=self.xy, color='white', max_width=self.size[0], max_lines=1, font_size=12)
+        tingbot.screen.text(self.label, xy=self.xy, color=font_color, max_width=self.size[0], max_lines=1, font_size=13)
 
     @classmethod
     def renderAll(self):
