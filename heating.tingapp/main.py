@@ -54,18 +54,6 @@ def setup():
     screen.fill(color='black')
     connect()
 
-@right_button.press
-def on_right():
-    connect()
-
-@midleft_button.press
-def on_midleft():
-    connect()
-
-@midright_button.press
-def on_midright():
-    connect()
-
 @left_button.press
 def on_left():
     connect()
